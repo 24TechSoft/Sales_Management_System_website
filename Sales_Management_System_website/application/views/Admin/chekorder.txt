@@ -1,0 +1,88 @@
+function ordercheck(){
+	var itemname=document.getElementById('itemname').value;
+	var warehouse=document.getElementById('warehouse').value;
+	var fdate=document.getElementById('fdate').value;
+	var tdate=document.getElementById('tdate').value;
+	
+	var url="<?php echo base_url();?>Report_Controller/checkstocks";	
+	alert(itemname);
+		
+	alert(url);
+	$.ajax({
+		url:url,
+		type: 'POST',
+		data: {'itemname':itemname,
+		'warehouse':warehouse,
+		'fdate':fdate,
+		'tdate':tdate},
+		dataType: 'json',
+		success: function(data){
+			alert(data.length);
+			var html = '';
+			
+			html += '<div class="x_panel">'+
+                  '<div class="x_title">'+
+                    '<h2>Orders </h2>'+
+                    '<ul class="nav navbar-right panel_toolbox">'+
+                      '<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>'+
+                      '</li>'+
+                      '<li class="dropdown">'+
+                        '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>'+
+                        '<ul class="dropdown-menu" role="menu">'+
+                         '<li><a href="#">Settings 1</a>'+
+                          '</li>'+
+                          '<li><a href="#">Settings 2</a>'+
+                          '</li>'+
+                        '</ul>'+
+                      '</li>'+
+                      '<li><a class="close-link"><i class="fa fa-close"></i></a>'+
+                      '</li>'+
+                    '</ul>'+
+                    '<div class="clearfix"></div>'+
+                  '</div>'+
+
+                  '<div class="x_content">'+
+
+
+                    '<div class="table-responsive" >'+
+					 '<table class="table table-striped jambo_table bulk_action">'+
+                        '<thead>'+
+                          '<tr class="headings">'+
+                            '<th>Date </th>'+
+							'<th>Warehouse </th>'+
+							'<th>Item </th>'+
+							'<th>Quantity </th>'+
+                            '<th>Remarks </th>'+
+                            
+							
+                          '</tr>'+
+                        '</thead>'+
+
+                        '<tbody id="showtable">';
+                      
+                    
+			for(var i=0; i<data.length;i++){
+				html +='<tr>'+
+				'<td>'+data[i].Date+'</td>'+
+				'<td>'+data[i].Warehouse+'</td>'+
+				'<td>'+data[i].Item+'</td>'+
+				'<td>'+data[i].Qty+'</td>'+
+				'<td>'+data[i].Remarks+'</td>'+
+				'</tr>';
+				
+			}
+			html += '</tbody>'+
+			'</table>'+
+			'</div>'+
+							
+						
+                  '</div>'+
+                '</div>';
+			$('#showorder').html("");
+			$('#showorder').html(html);
+		},
+		error:function(data){
+			alert('sorry no orders found');
+		}
+		});
+}

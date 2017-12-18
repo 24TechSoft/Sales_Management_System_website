@@ -1,0 +1,1 @@
+[06-Oct-2017 17:11:55 Asia/Calcutta] PHP Fatal error:  Call to undefined method AMR_ItemModel::GetItemPackageByVendor() in /home/techsof1/abad.24techsoft.com/application/controllers/AMR_VendorController.php on line 321
